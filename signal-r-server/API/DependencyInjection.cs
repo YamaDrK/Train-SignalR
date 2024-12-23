@@ -1,13 +1,14 @@
 ﻿using API.Data;
 using API.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 namespace API
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructureService(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructureService(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDbContext>();
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddSignalR();
 
             return services;

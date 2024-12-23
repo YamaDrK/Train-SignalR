@@ -4,13 +4,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 var apiPolicy = "SignalR-policy";
 
-builder.Services.AddInfrastructureService();
+builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddWebAPIService();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(apiPolicy, policy =>
     {
-        policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost" || new Uri(origin).Host == "192.168.1.157")
+        policy.SetIsOriginAllowed(origin => new Uri(origin).Host is "localhost")
        .AllowAnyMethod()
        .AllowAnyHeader()
        .AllowCredentials();

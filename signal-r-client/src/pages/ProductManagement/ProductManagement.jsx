@@ -24,7 +24,6 @@ const ProductManagement = () => {
 		const response = await AxiosConfig.delete('/product/' + id).then((res) => res)
 		if (response.status === HttpStatusCode.Ok) {
 			SignalRService.ProductHub.invoke('GetProductsAsync')
-			handleClose()
 		}
 	}
 
