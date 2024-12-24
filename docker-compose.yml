@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  api:
+    extends:
+      file: ./signal-r-server/docker-compose.yml
+      service: api
+
+  client:
+    container_name: 'SignalR-Client'
+    image: signal-r-client:1.0
+    build:
+      context: ./signal-r-client
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - api
+
+  sqlserver:
+    container_name: 'SQLServer'
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: DSAdsa@123
+    restart: always
+    ports:
+      - '1433:1433'
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+volumes:
+  sqlserver_data:

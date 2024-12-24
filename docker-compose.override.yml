@@ -1,0 +1,5 @@
+services:
+  api:
+    extends:
+      file: ./signal-r-server/docker-compose.override.yml
+      service: api
